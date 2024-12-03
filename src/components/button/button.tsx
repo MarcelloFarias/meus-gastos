@@ -1,5 +1,6 @@
 import { StyleSheet, Pressable, Text, DimensionValue } from "react-native";
 import { colors } from "@/src/theme/theme";
+import CustomText from "../custom-text/custom-text";
 
 interface ButtonProps {
   text?: string;
@@ -33,12 +34,15 @@ interface ButtonProps {
   right?: number;
   bottom?: number;
   zIndex?: number;
+  maxW?: number;
+  maxH?: number;
+  borderColor?: string;
 }
 
 function Button(props: ButtonProps) {
   const buttonStyle = StyleSheet.create({
     ...props?.style,
-    width: props?.w || "90%",
+    width: props?.w || "100%",
     display: props?.style?.display || "flex",
     alignItems: props?.style?.alignItems || "center",
     justifyContent: props?.style?.justifyContent || "center",
@@ -65,6 +69,9 @@ function Button(props: ButtonProps) {
     right: props.right,
     bottom: props.bottom,
     zIndex: props.zIndex,
+    maxWidth: props.maxW,
+    maxHeight: props.maxH,
+    borderColor: props.borderColor,
   });
 
   return (
@@ -78,14 +85,9 @@ function Button(props: ButtonProps) {
       {props?.children ? (
         props?.children
       ) : (
-        <Text
-          style={{
-            fontSize: props?.fs || 18,
-            color: props?.color || "#fff",
-          }}
-        >
+        <CustomText fs={props.fs} color={props.color}>
           {props?.text}
-        </Text>
+        </CustomText>
       )}
     </Pressable>
   );

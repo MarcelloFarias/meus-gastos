@@ -32,12 +32,13 @@ interface ColumnProps {
   borderWidth?: number;
   borderRadius?: number;
   children: any;
+  maxH?: number;
+  maxW?: number;
 }
 
 function Column(props: ColumnProps) {
   const columnStyle = StyleSheet.create({
     ...props.style,
-    flex: 1,
     width: props.w || "100%",
     height: props?.h || "auto",
     marginLeft: props?.ml || 0,
@@ -54,8 +55,11 @@ function Column(props: ColumnProps) {
     paddingRight: props?.pr || 0,
     display: "flex",
     flexDirection: "column",
-    alignItems: props.ai || "center",
-    justifyContent: props.jc || "center",
+    alignItems: props.ai,
+    justifyContent: props.jc,
+    maxHeight: props.maxH,
+    maxWidth: props.maxW,
+    backgroundColor: props.bg,
   });
 
   return <View style={columnStyle}>{props.children}</View>;

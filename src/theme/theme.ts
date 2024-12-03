@@ -10,4 +10,5 @@ export const colors: any = {
   800: "#0b7032",
   900: "#0b5c2c",
   950: "#003415",
+  error: "#f94449",
 };

@@ -53,8 +53,9 @@ function Row(props: RowProps) {
     paddingRight: props?.pr || 0,
     display: "flex",
     flexDirection: "row",
-    alignItems: props.ai || "center",
-    justifyContent: props.jc || "center",
+    alignItems: props.ai,
+    justifyContent: props.jc,
+    backgroundColor: props.bg,
   });
 
   return <View style={rowStyle}>{props.children}</View>;

@@ -25,7 +25,8 @@ interface IInputProps {
     | "numeric"
     | "email-address"
     | "phone-pad"
-    | "url";
+    | "url"
+    | "decimal-pad";
   borderRadius?: number;
   onChangeText: any;
   value?: any;

@@ -28,7 +28,7 @@ export default function ParallaxScrollView(props: Props) {
           translateY: interpolate(
             scrollOffset.value,
             [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.2]
           ),
         },
         {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: 180,
+    height: 140,
     overflow: "hidden",
   },
   content: {

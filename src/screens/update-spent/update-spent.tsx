@@ -17,18 +17,14 @@ import { formatCurrency } from "@/src/functions/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showMessage } from "react-native-flash-message";
 
-function RegisterSpentScreen() {
+function UpdateSpentScreen({ route }: any) {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const spents = useSelector(selectSpents);
-  const [spent, setSpent] = useState<Spent>({
-    name: "",
-    description: "",
-    value: "",
-    paymentDay: 0,
-  });
+  const { spentToUpdate } = route.params;
+  const [spent, setSpent] = useState<Spent>(spentToUpdate);
 
-  async function registerSpent() {
+  async function updateSpent() {
     if (!spent.name) {
       return showMessage({
         message: "Por favor, informe o nome do gasto",
@@ -50,24 +46,31 @@ function RegisterSpentScreen() {
       });
     }
 
-    await AsyncStorage.setItem("@spents", JSON.stringify([...spents, spent]));
+    const updatedSpents = spents.filter((spent: Spent) => {
+      return spent && spent !== spentToUpdate;
+    });
 
-    dispatch(setSpents([...spents, spent]));
+    await AsyncStorage.setItem(
+      "@spents",
+      JSON.stringify([spent, ...updatedSpents])
+    );
+
+    dispatch(setSpents([spent, ...updatedSpents]));
 
     showMessage({
-      message: "Gasto registrado com sucesso !",
+      message: "Gasto atualizado com sucesso !",
       type: "success",
     });
   }
 
   return (
-    <SafeAreaView style={RegisterScreenStyle.safeAreaView}>
+    <SafeAreaView style={updateScreenStyle.safeAreaView}>
       <ParallaxScrollView
         headerBackgroundColor={colors[300]}
         title={
           <Column ai="flex-start" jc="center" ml={16} h="100%">
             <CustomText fs={28} color={colors[950]}>
-              Registrar Gasto
+              Editar um gasto
             </CustomText>
           </Column>
         }
@@ -81,6 +84,7 @@ function RegisterSpentScreen() {
                 name: text,
               })
             }
+            value={spent?.name}
             label="Nome do gasto*"
             placeholder="Digite o nome do seu gasto..."
           />
@@ -92,12 +96,13 @@ function RegisterSpentScreen() {
               })
             }
             label="Descrição do gasto"
+            value={spent?.description}
             mt={24}
             placeholder="Digite a descrição do seu gasto..."
           />
           <Input
             keyboardType="numeric"
-            onChangeText={(text: string) =>
+            onChangeText={(text: any) =>
               setSpent({
                 ...spent,
                 value: formatCurrency(
@@ -121,9 +126,10 @@ function RegisterSpentScreen() {
             label="Dia de pagamento*"
             mt={24}
             placeholder="Digite o dia de pagamento do seu gasto..."
+            value={spent.paymentDay}
           />
 
-          <Button mt={48} text="Salvar" onPress={() => registerSpent()} />
+          <Button mt={48} text="Salvar" onPress={() => updateSpent()} />
           <Button
             mt={12}
             text="Voltar"
@@ -139,11 +145,11 @@ function RegisterSpentScreen() {
   );
 }
 
-const RegisterScreenStyle = StyleSheet.create({
+const updateScreenStyle = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: "#fff",
   },
 });
 
-export default RegisterSpentScreen;
+export default UpdateSpentScreen;

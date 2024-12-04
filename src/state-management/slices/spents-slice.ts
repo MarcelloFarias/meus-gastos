@@ -15,6 +15,7 @@ const spentsSlice = createSlice({
 
 export const { setSpents } = spentsSlice.actions;
 export const selectSpents = (state: any) => state.spents.spents;
+
 const spentsReducer = spentsSlice.reducer;
 
 export default spentsReducer;

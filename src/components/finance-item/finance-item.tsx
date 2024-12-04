@@ -1,17 +1,20 @@
 import Column from "@/src/components/column/column";
 import Row from "@/src/components/row/row";
-import Rows from "@/src/components/row/row";
 import { Spent } from "@/src/interfaces/interfaces";
 import CustomText from "../custom-text/custom-text";
 import { colors } from "@/src/theme/theme";
 import Feather from "@expo/vector-icons/Feather";
 import Button from "@/src/components/button/button";
+import { useNavigation } from "@react-navigation/native";
 
-interface FinanceItemProps {
-  finance: Spent;
+interface spentItemProps {
+  spent: Spent;
+  onDelete: () => void;
 }
 
-function FinanceItem(props: FinanceItemProps) {
+function spentItem(props: spentItemProps) {
+  const navigation = useNavigation<any>();
+
   return (
     <Row
       style={{ borderBottomWidth: 1, borderColor: "rgba(0, 0, 0, 0.3)" }}
@@ -28,7 +31,7 @@ function FinanceItem(props: FinanceItemProps) {
           numOfLines={1}
           ellipsisSizeMode="clip"
         >
-          {props.finance.name}
+          {props.spent.name}
         </CustomText>
 
         <CustomText
@@ -37,7 +40,7 @@ function FinanceItem(props: FinanceItemProps) {
           ellipsisSizeMode="tail"
           color="rgba(0, 0, 0, 0.3)"
         >
-          {props.finance.description}
+          {props.spent.description}
         </CustomText>
 
         <CustomText
@@ -47,7 +50,7 @@ function FinanceItem(props: FinanceItemProps) {
           color={colors[900]}
           ellipsisSizeMode="clip"
         >
-          {props.finance.value}
+          {props.spent.value}
         </CustomText>
 
         <CustomText
@@ -57,16 +60,22 @@ function FinanceItem(props: FinanceItemProps) {
           color="rgba(0, 0, 0, 0.3)"
           pb={12}
         >
-          Dia de pagamento: {props.finance.paymentDay}
+          Dia de pagamento: {props.spent.paymentDay}
         </CustomText>
       </Column>
 
       <Column w="10%">
-        <Button onPress={() => {}} bg="transparent">
+        <Button onPress={() => props.onDelete?.()} bg="transparent">
           <Feather name="trash-2" size={28} color={colors.error} />
         </Button>
 
-        <Button onPress={() => {}} mt={16} bg="transparent">
+        <Button
+          onPress={() =>
+            navigation.navigate("update-spent", { spentToUpdate: props.spent })
+          }
+          mt={16}
+          bg="transparent"
+        >
           <Feather name="edit-3" size={28} color={colors[800]} />
         </Button>
       </Column>
@@ -74,4 +83,4 @@ function FinanceItem(props: FinanceItemProps) {
   );
 }
 
-export default FinanceItem;
+export default spentItem;

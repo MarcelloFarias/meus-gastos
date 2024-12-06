@@ -68,24 +68,6 @@ function HomeScreen() {
           </Column>
         }
       >
-        <Row ai="center" jc="flex-end">
-          <Button
-            onPress={() => navigation.navigate("register-spent")}
-            h={80}
-            maxW={100}
-          >
-            <CustomText position="absolute" top={6} left={6}>
-              Novo{`\n`}Item
-            </CustomText>
-            <AntDesign
-              style={{ position: "absolute", bottom: 6, right: 6 }}
-              name="plus"
-              size={28}
-              color={colors[950]}
-            />
-          </Button>
-        </Row>
-
         {spents.length > 0 ? (
           spents.map((spent: Spent, index: number) => {
             return (
@@ -110,6 +92,15 @@ function HomeScreen() {
           </Column>
         )}
       </ParallaxScrollView>
+      <Button
+        onPress={() => navigation.navigate("register-spent")}
+        h={64}
+        maxW={64}
+        borderRadius={50}
+        mb={16}
+      >
+        <AntDesign name="plus" size={28} color={colors[950]} />
+      </Button>
     </SafeAreaView>
   );
 }

@@ -11,9 +11,9 @@ interface RowProps {
     | "flex-end"
     | "flex-start";
   w?: DimensionValue;
-  mw?: DimensionValue;
+  maxW?: DimensionValue;
   h?: DimensionValue;
-  mh?: DimensionValue;
+  maxH?: DimensionValue;
   m?: number;
   mx?: number;
   my?: number;
@@ -56,6 +56,8 @@ function Row(props: RowProps) {
     alignItems: props.ai,
     justifyContent: props.jc,
     backgroundColor: props.bg,
+    maxWidth: props.maxW,
+    maxHeight: props.maxH,
   });
 
   return <View style={rowStyle}>{props.children}</View>;

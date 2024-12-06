@@ -51,8 +51,8 @@ interface IInputProps {
   right?: number;
   bottom?: number;
   zIndex?: number;
-  maxW?: number;
-  maxH?: number;
+  maxW?: DimensionValue;
+  maxH?: DimensionValue;
 }
 
 function Input(props: IInputProps) {

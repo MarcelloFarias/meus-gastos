@@ -32,8 +32,8 @@ interface ColumnProps {
   borderWidth?: number;
   borderRadius?: number;
   children: any;
-  maxH?: number;
-  maxW?: number;
+  maxH?: DimensionValue;
+  maxW?: DimensionValue;
 }
 
 function Column(props: ColumnProps) {

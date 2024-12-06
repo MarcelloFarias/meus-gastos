@@ -11,9 +11,9 @@ interface BoxProps {
     | "flex-end"
     | "flex-start";
   w?: DimensionValue;
-  mw?: DimensionValue;
+  maxW?: DimensionValue;
   h?: DimensionValue;
-  mh?: DimensionValue;
+  maxH?: DimensionValue;
   m?: number;
   mx?: number;
   my?: number;
@@ -60,6 +60,8 @@ function Box(props: BoxProps) {
     justifyContent: props.jc,
     backgroundColor: props.bg,
     borderColor: props.borderColor,
+    maxHeight: props.maxH,
+    maxWidth: props.maxW,
   });
 
   return <View style={boxStyle}>{props.children}</View>;

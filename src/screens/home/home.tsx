@@ -3,13 +3,10 @@ import CustomText from "@/components/custom-text/custom-text";
 import ParallaxScrollView from "@/components/parallax-scrollview/parallax-scrollview";
 import Button from "@/components/button/button";
 import { colors } from "@/src/theme/theme";
-import { SafeAreaView, StyleSheet, FlatList, Image } from "react-native";
+import { SafeAreaView, StyleSheet, Image } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Row from "@/src/components/row/row";
-import Input from "@/src/components/input/input";
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { formatCurrency } from "@/src/functions/functions";
 import {
   selectSpents,
   setSpents,
@@ -18,14 +15,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Spent } from "@/src/interfaces/interfaces";
 import FinanceItem from "@/src/components/finance-item/finance-item";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Box from "@/src/components/box/box";
 import { showMessage } from "react-native-flash-message";
+import Input from "@/src/components/input/input";
 
 const emptyListImage = require("@/assets/empty-list.png");
 
 function HomeScreen() {
   const navigation = useNavigation<any>();
   const spents = useSelector(selectSpents);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const dispatch = useDispatch();
 
@@ -68,16 +66,29 @@ function HomeScreen() {
           </Column>
         }
       >
+        {spents.length > 4 && (
+          <Input
+            placeholder="Pesquise por um gasto"
+            onChangeText={(text: string) => setSearchTerm(text)}
+          />
+        )}
+
         {spents.length > 0 ? (
-          spents.map((spent: Spent, index: number) => {
-            return (
-              <FinanceItem
-                key={`finance_${index}_${spent.name}`}
-                spent={spent}
-                onDelete={() => deleteSpent(spent)}
-              />
-            );
-          })
+          spents
+            .filter((spent: Spent) => {
+              if (spent.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return spent;
+              }
+            })
+            .map((spent: Spent, index: number) => {
+              return (
+                <FinanceItem
+                  key={`finance_${index}_${spent.name}`}
+                  spent={spent}
+                  onDelete={() => deleteSpent(spent)}
+                />
+              );
+            })
         ) : (
           <Column ai="center" maxH={300}>
             <Image
